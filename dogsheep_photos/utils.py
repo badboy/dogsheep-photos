@@ -152,7 +152,7 @@ def to_uuid(uuid_0, uuid_1):
 def s3_upload(path, sha256, ext, creds):
     client = getattr(boto3_local, "client", None)
     if client is None:
-        endpoint_url = creds["photos_s3_endpoint"] if "photos_s3_endpoint" in creds and creds["photos_s3_endpoint"] else None
+        endpoint_url = creds.get("photos_s3_endpoint")
         client = boto3.client(
             "s3",
             endpoint_url=endpoint_url,

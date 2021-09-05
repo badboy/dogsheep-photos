@@ -45,7 +45,7 @@ def s3_auth(auth):
     bucket = click.prompt("S3 bucket")
     access_key_id = click.prompt("Access key ID")
     secret_access_key = click.prompt("Secret access key")
-    s3_endpoint = click.prompt("S3 Endpoint (enter black for default)")
+    s3_endpoint = click.prompt("S3 Endpoint (Press ENTER for default)")
     if pathlib.Path(auth).exists():
         auth_data = json.load(open(auth))
     else:
@@ -89,7 +89,7 @@ def upload(db_path, directories, auth, no_progress, dry_run):
     "Upload photos from directories to S3"
     creds = json.load(open(auth))
     db = sqlite_utils.Database(db_path)
-    endpoint_url = creds["photos_s3_endpoint"] if "photos_s3_endpoint" in creds and creds["photos_s3_endpoint"] else None
+    endpoint_url = creds.get("photos_s3_endpoint")
     client = boto3.client(
         "s3",
         endpoint_url=endpoint_url,
