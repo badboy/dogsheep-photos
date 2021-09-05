@@ -45,7 +45,7 @@ def s3_auth(auth):
     bucket = click.prompt("S3 bucket")
     access_key_id = click.prompt("Access key ID")
     secret_access_key = click.prompt("Secret access key")
-    s3_endpoint = click.prompt("S3 Endpoint (Press ENTER for default)")
+    s3_endpoint = click.prompt("S3 Endpoint (Press ENTER for default)", default="")
     if pathlib.Path(auth).exists():
         auth_data = json.load(open(auth))
     else:
@@ -53,7 +53,7 @@ def s3_auth(auth):
     auth_data.update(
         {
             "photos_s3_bucket": bucket,
-            "photos_s3_endpoint": s3_endpoint,
+            "photos_s3_endpoint": s3_endpoint or None,
             "photos_s3_access_key_id": access_key_id,
             "photos_s3_secret_access_key": secret_access_key,
         }
